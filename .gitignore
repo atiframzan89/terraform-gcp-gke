@@ -1,0 +1,4 @@
+.terraform
+terraform*
+./config/*.json
+./config/dev.tfvars

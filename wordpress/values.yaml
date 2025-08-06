@@ -1,0 +1,10 @@
+wordpress:
+  WORDPRESS_DB_HOST: "mysql"
+  WORDPRESS_DB_PASSWORD: "password"
+  WORDPRESS_DB_NAME: "wordpress"
+  WORDPRESS_DB_USER: "root"
+
+mysql:
+  MYSQL_ROOT_PASSWORD: "password"
+  MYSQL_DATABASE: "wordpress"
+ 

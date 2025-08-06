@@ -1,0 +1,26 @@
+grafana:
+  enabled: true
+  admin:
+    user: admin
+    password: admin123
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: "gce"
+    hosts:
+      - grafana.example.com
+    path: /
+    pathType: Prefix
+
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          url: http://prometheus-operated.monitoring.svc.cluster.local:9090
+          isDefault: true
+          editable: true

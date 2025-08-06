@@ -1,0 +1,12 @@
+# grafana:
+#   existingSecret: ""
+#   user: admin
+#   password: admin123
+#   service:
+#     type: LoadBalancer
+#   ingress:
+#     enabled: false
+
+prometheus:
+  service:
+    type: ClusterIP
