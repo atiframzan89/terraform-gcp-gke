@@ -17,6 +17,12 @@ resource "google_container_cluster" "primary" {
     workload_pool = "${var.project-id}.svc.id.goog"
   }
 
+  logging_config {
+    enable_components = [ "SYSTEM_COMPONENTS",
+                          "CONTROLLER_MANAGER"
+                     ]
+  }
+
   # GCE Ingress Controller
   addons_config {
     http_load_balancing {
@@ -131,16 +137,36 @@ resource "helm_release" "grafana" {
   repository = "https://grafana.github.io/helm-charts"
   chart      = "grafana"
   version    = "7.3.9"
-  values = [
-    file("${path.module}/config/grafana.yml")
+  # values = [
+  #   file("${path.module}/config/grafana.yml")
+  # ]
+  set =  [{
+    name  = "adminPassword"
+    value = "supersecret"
+  },
+  {
+    name  = "ingress.enabled"
+    value = "true"
+  },
+  {
+    name  = "ingress.annotations.kubernetes\\.io/ingress\\.class"
+    value = "gce"
+  },
+  {
+    name  = "ingress.hosts[0]"
+    value = "grafana.example.com"
+  },
+  {
+    name  = "ingress.path"
+    value = "/"
+  },
+  {
+    name  = "ingress.pathType"
+    value = "Prefix"
+  },
+  {
+    name  = "service.type"
+    value = "NodePort"
+  }
   ]
-  # set {
-  #   name  = "adminPassword"
-  #   value = "supersecret"
-  # }
-
-  # set {
-  #   name  = "service.type"
-  #   value = "LoadBalancer"
-  # }
 }
